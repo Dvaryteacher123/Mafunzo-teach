@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mfumo wa Supabase Auth</title>
+</head>
+<body style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f9;">
+
+    <div style="max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1);">
+        <h2 style="text-align: center;">Mfumo wa Supabase Auth</h2>
+
+        <!-- Sehemu ya Kusajili (Sign Up) -->
+        <div style="margin-bottom: 30px;">
+            <h3>Jisajili (Sign Up)</h3>
+            <input type="email" id="signup-email" placeholder="Weka barua pepe" style="width: 100%; padding: 10px; margin-bottom: 10px; box-sizing: border-box;">
+            <input type="password" id="signup-password" placeholder="Weka neno la siri" style="width: 100%; padding: 10px; margin-bottom: 10px; box-sizing: border-box;">
+            <button id="signup-btn" style="width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Jisajili</button>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
+
+        <!-- Sehemu ya Kuingia (Login) -->
+        <div>
+            <h3>Ingia (Login)</h3>
+            <input type="email" id="login-email" placeholder="Weka barua pepe" style="width: 100%; padding: 10px; margin-bottom: 10px; box-sizing: border-box;">
+            <input type="password" id="login-password" placeholder="Weka neno la siri" style="width: 100%; padding: 10px; margin-bottom: 10px; box-sizing: border-box;">
+            <button id="login-btn" style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 10px;">Ingia</button>
+            <button id="google-btn" style="width: 100%; padding: 10px; background-color: #4285F4; color: white; border: none; border-radius: 4px; cursor: pointer;">Ingia na Google</button>
+        </div>
+    </div>
+
+    <!-- Kuunganisha faili lako la supabase.js na kusimamia Google OAuth -->
+    <script type="module">
+        import { supabase } from './supabase.js';
+
+        // Kitendo cha kubonyeza kitufe cha Google OAuth
+        document.getElementById('google-btn').addEventListener('click', async () => {
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: 'https://mafunzo-teach.onrender.com/dashboard.html'
+                }
+            });
+            if (error) {
+                alert('Imeshindikana: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
+
