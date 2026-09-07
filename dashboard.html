@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Supabase Auth</title>
+    <!-- Maktaba ya Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body style="font-family: Arial; text-align: center; margin-top: 50px;">
+    <h1>Karibu kwenye Dashboard Yako!</h1>
+    <p id="user-info" style="font-size: 18px; color: #333;"></p>
+    <button onclick="fanyaLogout()" style="padding: 10px 20px; background: red; color: white; border: none; cursor: pointer;">Toka (Logout)</button>
+
+    <!-- Tunapakia faili la supabase.js -->
+    <script src="supabase.js"></script>
+    <script>
+        // Angalia kama mtumiaji yupo hewani (logged in)
+        async function angaliaKikao() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            
+            if (!session) {
+                // Kama hajalogin, mrudishe kwenye ukurasa wa login (index.html)
+                window.location.href = 'index.html';
+            } else {
+                // Onyesha email ya mtumiaji aliyeingia
+                document.getElementById('user-info').innerText = `Umeingia kama: ${session.user.email}`;
+            }
+        }
+
+        // Kitendakazi cha Kutoka (Logout)
+        async function fanyaLogout() {
+            await supabaseClient.auth.signOut();
+            window.location.href = 'index.html';
+        }
+
+        angaliaKikao();
+    </script>
+</body>
+</html>
+
